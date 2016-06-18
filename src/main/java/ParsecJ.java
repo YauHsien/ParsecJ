@@ -10,6 +10,7 @@ import combinator.Alt;
 import combinator.Then;
 import combinator.Using;
 import combinator.Many;
+import combinator.Some;
 import example.AlwaysOne;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,8 @@ abstract class ParsecJ<T1, T2> {
 	    new Using(li, new AlwaysOne());
 	Many<Character, MyString> mli =
 	    new Many<Character, MyString>(li);
+	Some<Character, MyString> sli =
+	    new Some<Character, MyString>(li);
 
 	MyString inp = new MyString("hello,world");
 	MyString inp1 = new MyString("aaab");
@@ -45,6 +48,8 @@ abstract class ParsecJ<T1, T2> {
 	    ch_using_num.parse(inp1.clone());
 	ArrayList<Pair<ArrayList<Character>, MyString>> mli1 =
 	    mli.parse(inp1.clone());
+	ArrayList<Pair<ArrayList<Character>, MyString>> sli1 =
+	    sli.parse(inp1.clone());
 
 	print(s1);
 	print(f1);
@@ -52,6 +57,7 @@ abstract class ParsecJ<T1, T2> {
 	print(li1);
 	print(cn);
 	print(mli1);
+	print(sli1);
     }
 
     private static void print(ArrayList a) {
