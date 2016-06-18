@@ -6,6 +6,10 @@ import primitive.Succeed;
 import primitive.Fail;
 import primitive.Satisfy;
 import primitive.Literal;
+import combinator.Alt;
+import combinator.Then;
+import combinator.Using;
+import example.AlwaysOne;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +26,8 @@ abstract class ParsecJ<T1, T2> {
 	Satisfy<Character, MyString> st =
 	    new Satisfy<Character, MyString>(eqx);
 	Literal li = new Literal('a');
+	Using<Character, Integer, MyString> ch_using_num =
+	    new Using(li, new AlwaysOne());
 
 	MyString inp = new MyString("hello,world");
 	MyString inp1 = new MyString("aaab");
@@ -30,11 +36,13 @@ abstract class ParsecJ<T1, T2> {
 	ArrayList<Pair<Integer, MyString>> f1 = f.parse(inp.clone());
 	ArrayList<Pair<Character, MyString>> p1 = st.parse(inp.clone());
 	ArrayList<Pair<Character, MyString>> li1 = li.parse(inp1.clone());
+	ArrayList<Pair<Integer, MyString>> cn = ch_using_num.parse(inp1.clone());
 
 	print(s1);
 	print(f1);
 	print(p1);
 	print(li1);
+	print(cn);
     }
 
     private static void print(ArrayList a) {

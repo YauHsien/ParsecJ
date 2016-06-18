@@ -9,6 +9,10 @@ public class Pair<T1, T2> {
 	this.t2 = b;
     }
 
+    public void setFst(T1 t) {
+	this.t1 = t;
+    }
+    
     public T1 fst() {
 	return this.t1;
     }
