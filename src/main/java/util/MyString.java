@@ -1,11 +1,11 @@
 package util;
 import java.util.LinkedList;
 
-public class MyString extends LinkedList<Character> {
+public class MyString extends LinkedList<Character> implements Cloneable {
     private String value = "";
 
     public MyString(String s) {
-	this.value = s;
+	value = s;
     }
 
     public boolean isEmpty() {
@@ -20,6 +20,16 @@ public class MyString extends LinkedList<Character> {
 	return new MyString(value.substring(1));
     }
 
+    public MyString clone() {
+        Object o = null;
+	try {
+	    o = super.clone();
+	} catch(Exception ex) {
+	    ex.printStackTrace();
+	}
+	return (MyString)o;
+    }
+    
     @Override
     public Character pollFirst() {
 	if (isEmpty())

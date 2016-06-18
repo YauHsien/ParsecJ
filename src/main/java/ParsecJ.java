@@ -23,9 +23,9 @@ abstract class ParsecJ<T1, T2> {
 
 	MyString inp = new MyString("hello,world");
 	
-	ArrayList<Pair<Integer, MyString>> s1 = s.parse(inp);
-	ArrayList<Pair<Integer, MyString>> f1 = f.parse(inp);
-	ArrayList<Pair<Character, MyString>> p1 = st.parse(inp);
+	ArrayList<Pair<Integer, MyString>> s1 = s.parse(inp.clone());
+	ArrayList<Pair<Integer, MyString>> f1 = f.parse(inp.clone());
+	ArrayList<Pair<Character, MyString>> p1 = st.parse(inp.clone());
 
 	print(s1);
 	print(f1);
