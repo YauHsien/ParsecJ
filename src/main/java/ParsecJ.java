@@ -5,6 +5,7 @@ import util.EqualX;
 import primitive.Succeed;
 import primitive.Fail;
 import primitive.Satisfy;
+import primitive.Literal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,16 +21,20 @@ abstract class ParsecJ<T1, T2> {
 	    new EqualX<Character>('h');
 	Satisfy<Character, MyString> st =
 	    new Satisfy<Character, MyString>(eqx);
+	Literal li = new Literal('a');
 
 	MyString inp = new MyString("hello,world");
+	MyString inp1 = new MyString("aaab");
 	
 	ArrayList<Pair<Integer, MyString>> s1 = s.parse(inp.clone());
 	ArrayList<Pair<Integer, MyString>> f1 = f.parse(inp.clone());
 	ArrayList<Pair<Character, MyString>> p1 = st.parse(inp.clone());
+	ArrayList<Pair<Character, MyString>> li1 = li.parse(inp1.clone());
 
 	print(s1);
 	print(f1);
 	print(p1);
+	print(li1);
     }
 
     private static void print(ArrayList a) {
