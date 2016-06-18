@@ -1,7 +1,8 @@
 package primitive;
 import util.Parser;
 import util.Pair;
-import util.MyList;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Succeed<T1, T2> extends Parser<T1, T2> {
 
@@ -10,8 +11,8 @@ public class Succeed<T1, T2> extends Parser<T1, T2> {
     }
     
     @Override
-    public MyList<Pair<T1, T2>> parse(T2 inp) {
-	MyList<Pair<T1, T2>> list = new MyList<Pair<T1, T2>>();
+    public ArrayList<Pair<T1, T2>> parse(T2 inp) {
+	ArrayList<Pair<T1, T2>> list = new ArrayList<Pair<T1, T2>>();
 	list.add(new Pair<T1, T2>(getV(), inp));
 	return list;
     }

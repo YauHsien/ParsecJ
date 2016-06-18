@@ -1,5 +1,5 @@
 package util;
 
-public abstract class Predicate<T1> {
-    public abstract boolean eval(T1 v);
+public abstract class Predicate<T> {
+    public abstract boolean eval(T v);
 }

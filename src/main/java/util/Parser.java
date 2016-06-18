@@ -1,4 +1,5 @@
 package util;
+import java.util.ArrayList;
 
 public abstract class Parser<T1, T2> {
     private T1 v;
@@ -13,8 +14,5 @@ public abstract class Parser<T1, T2> {
 	return this.v;
     }
     
-    public abstract MyList<Pair<T1, T2>> parse(T2 inp);
+    public abstract ArrayList<Pair<T1, T2>> parse(T2 inp);
 }
-
-
-
