@@ -8,16 +8,16 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Some<T1, T2 extends LinkedList<T3>, T3>
-    extends Parser<ArrayList<T1>, T2> {
+    extends Parser<ArrayList<T1>, T2, T3> {
     
-    private Parser<T1, T2> p;
+    private Parser<T1, T2, T3> p;
     
-    public Some(Parser<T1, T2> p) {
+    public Some(Parser<T1, T2, T3> p) {
 	this.p = p;
     }
 
     @Override
-    public ArrayList<Pair<ArrayList<T1>, T2>> parse(T2 inp) {
+    protected ArrayList<Pair<ArrayList<T1>, T2>> parse1(T2 inp) {
 	
 	Many<T1, T2, T3> mp = new Many<T1, T2, T3>(p);
 	

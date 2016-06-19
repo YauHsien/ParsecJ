@@ -1,13 +1,13 @@
 package util;
 
 public class EqualX<T> extends Predicate<T> {
-    private T x;
 
     public EqualX(T x) {
-	this.x = x;
+	super(x);
     }
-    
-    public boolean eval(T v) {
-	return x.equals(v);
+
+    @Override
+    protected Boolean eval(T v) {
+	return v.equals(getV());
     }
 }

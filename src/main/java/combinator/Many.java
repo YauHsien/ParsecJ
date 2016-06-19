@@ -8,16 +8,16 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Many<T1, T2 extends LinkedList<T3>, T3>
-    extends Parser<ArrayList<T1>, T2> {
+    extends Parser<ArrayList<T1>, T2, T3> {
     
-    private Parser<T1, T2> p;
+    private Parser<T1, T2, T3> p;
     
-    public Many(Parser<T1, T2> p) {
+    public Many(Parser<T1, T2, T3> p) {
 	this.p = p;
     }
 
     @Override
-    public ArrayList<Pair<ArrayList<T1>, T2>> parse(T2 inp) {
+    protected ArrayList<Pair<ArrayList<T1>, T2>> parse1(T2 inp) {
 	
 	Many<T1, T2, T3> mp = new Many<T1, T2, T3>(p);
 	
@@ -30,8 +30,8 @@ public class Many<T1, T2 extends LinkedList<T3>, T3>
 	    new Using<Pair<T1, ArrayList<T1>>, ArrayList<T1>, T2, T3>(then,
 								      cons);
 
-	Succeed<ArrayList<T1>, T2> succeed =
-	    new Succeed<ArrayList<T1>, T2>(new ArrayList<T1>());
+	Succeed<ArrayList<T1>, T2, T3> succeed =
+	    new Succeed<ArrayList<T1>, T2, T3>(new ArrayList<T1>());
 
 	Alt<ArrayList<T1>, T2, T3> alt =
 	    new Alt<ArrayList<T1>, T2, T3>(using, succeed);

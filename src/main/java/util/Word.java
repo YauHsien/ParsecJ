@@ -1,11 +1,15 @@
 package util;
+import util.Predicate;
 import primitive.Satisfy;
 import combinator.Some;
 import java.util.ArrayList;
 
-public class Word extends Parser<ArrayList<Character>, MyString> {
+public class Word
+    extends Parser<ArrayList<Character>, MyString, Character> {
+    
     @Override
-    public ArrayList<Pair<ArrayList<Character>, MyString>> parse(MyString inp) {
+    protected ArrayList<Pair<ArrayList<Character>, MyString>> parse1
+	(MyString inp) {
 
 	Satisfy<Character, MyString> s =
 	    new Satisfy<Character, MyString>(new Letter());
@@ -17,8 +21,12 @@ public class Word extends Parser<ArrayList<Character>, MyString> {
     }
 }
 
+
+
 class Letter extends Predicate<Character> {
-    public boolean eval(Character c) {
+
+    @Override
+    protected Boolean eval(Character c) {
 	return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z');
     }
 }

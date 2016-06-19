@@ -4,16 +4,19 @@ import util.Pair;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class Alt<T1, T2 extends LinkedList<T3>, T3> extends Parser<T1, T2> {
-    private Parser<T1, T2> fst;
-    private Parser<T1, T2> snd;
+public class Alt<T1, T2 extends LinkedList<T3>, T3>
+    extends Parser<T1, T2, T3> {
 
-    public Alt(Parser<T1, T2> p1, Parser<T1, T2> p2) {
+    private Parser<T1, T2, T3> fst;
+    private Parser<T1, T2, T3> snd;
+
+    public Alt(Parser<T1, T2, T3> p1, Parser<T1, T2, T3> p2) {
 	fst = p1;
 	snd = p2;
     }
 
-    public ArrayList<Pair<T1, T2>> parse(T2 inp) {
+    @Override
+    protected ArrayList<Pair<T1, T2>> parse1(T2 inp) {
 	T2 inp1 = (T2) inp.clone();
 	T2 inp2 = (T2) inp.clone();
 	

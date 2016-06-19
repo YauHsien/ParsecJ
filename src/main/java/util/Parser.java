@@ -1,7 +1,8 @@
 package util;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
-public abstract class Parser<T1, T2> {
+public abstract class Parser<T1, T2 extends LinkedList<T3>, T3> {
     private T1 v;
     
     public Parser(T1 v) {
@@ -13,6 +14,11 @@ public abstract class Parser<T1, T2> {
     protected T1 getV() {
 	return this.v;
     }
+
+    public ArrayList<Pair<T1, T2>> parse(T2 inp) {
+	T2 inp1 = (T2) inp.clone();
+	return parse1(inp1);
+    }
     
-    public abstract ArrayList<Pair<T1, T2>> parse(T2 inp);
+    protected abstract ArrayList<Pair<T1, T2>> parse1(T2 inp);
 }

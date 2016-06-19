@@ -4,23 +4,21 @@ import util.Pair;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class
-    Then<T1, T2, T3 extends LinkedList<T4>, T4>
-    extends Parser<Pair<T1, T2>, T3> {
+public class Then<T1, T2, T3 extends LinkedList<T4>, T4>
+    extends Parser<Pair<T1, T2>, T3, T4> {
 
-    private Parser<T1, T3> fst;
-    private Parser<T2, T3> snd;
+    private Parser<T1, T3, T4> fst;
+    private Parser<T2, T3, T4> snd;
 
-    public Then(Parser<T1, T3> p1, Parser<T2, T3> p2) {
+    public Then(Parser<T1, T3, T4> p1, Parser<T2, T3, T4> p2) {
 	fst = p1;
 	snd = p2;
     }
 
     @Override
-    public ArrayList<Pair<Pair<T1, T2>, T3>> parse(T3 inp) {
-	T3 inp1 = (T3) inp.clone();
+    protected ArrayList<Pair<Pair<T1, T2>, T3>> parse1(T3 inp) {
 	
-	ArrayList<Pair<T1, T3>> set1 = fst.parse(inp1);
+	ArrayList<Pair<T1, T3>> set1 = fst.parse(inp);
 	ArrayList<Pair<Pair<T1, T2>, T3>> set2 =
 	    new ArrayList<Pair<Pair<T1, T2>, T3>>();
 	

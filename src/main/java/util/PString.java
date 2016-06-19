@@ -8,7 +8,9 @@ import combinator.Then;
 import combinator.Using;
 import java.util.ArrayList;
 
-public class PString extends Parser<ArrayList<Character>, MyString> {
+public class PString
+    extends Parser<ArrayList<Character>, MyString, Character> {
+    
     private MyString v;
 
     public PString(MyString v) {
@@ -16,9 +18,11 @@ public class PString extends Parser<ArrayList<Character>, MyString> {
     }
 
     @Override
-    public ArrayList<Pair<ArrayList<Character>, MyString>> parse(MyString inp) {
+    protected ArrayList<Pair<ArrayList<Character>, MyString>>
+	parse1(MyString inp) {
+	
 	if (v.isEmpty())
-	    return (new Succeed<ArrayList<Character>,MyString>
+	    return (new Succeed<ArrayList<Character>, MyString, Character>
 		    (new ArrayList<Character>())).parse(inp);
 
 	Character head = v.pollFirst();
@@ -26,8 +30,8 @@ public class PString extends Parser<ArrayList<Character>, MyString> {
 	PString str = new PString(v);
 	
 	Then<Character, ArrayList<Character>, MyString, Character> then =
-	    new Then<Character, ArrayList<Character>, MyString, Character>(lit,
-									   str);
+	    new Then<Character, ArrayList<Character>,
+	    MyString, Character>(lit, str);
 
 	Using<
 	    Pair<Character, ArrayList<Character>>,

@@ -14,6 +14,7 @@ import combinator.Then;
 import combinator.Using;
 import combinator.Many;
 import combinator.Some;
+import combinator.XThen;
 import example.AlwaysOne;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +23,10 @@ abstract class ParsecJ<T1, T2> {
 
     public static void main(String[] args) {
 
-	Succeed<Integer, MyString> s =
-	    new Succeed<Integer, MyString>(5);
-	Fail<Integer, MyString> f =
-	    new Fail<Integer, MyString>();
+	Succeed<Integer, MyString, Character> s =
+	    new Succeed<Integer, MyString, Character>(5);
+	Fail<Integer, MyString, Character> f =
+	    new Fail<Integer, MyString, Character>();
 	/*
 	EqualX<Character> eqx =
 	    new EqualX<Character>('h');
@@ -42,6 +43,9 @@ abstract class ParsecJ<T1, T2> {
 	Number np = new Number();
 	Word wp = new Word();
 	PString stringp = new PString(new MyString("hello"));
+	XThen<ArrayList<Character>, ArrayList<Character>, MyString, Character>
+	    xthen = new XThen<ArrayList<Character>, ArrayList<Character>,
+	    MyString, Character>(np, wp);
 
 	MyString inp = new MyString("hello,world");
 	MyString inp1 = new MyString("aaab");
@@ -63,6 +67,8 @@ abstract class ParsecJ<T1, T2> {
 	    wp.parse(inp);
 	ArrayList<Pair<ArrayList<Character>, MyString>> stringp1 =
 	    stringp.parse(inp);
+	ArrayList<Pair<ArrayList<Character>, MyString>> xthen1 =
+	    xthen.parse(inp2);
 
 	print(s1);
 	print(f1);
@@ -74,6 +80,7 @@ abstract class ParsecJ<T1, T2> {
 	print(np1);
 	print(wp1);
 	print(stringp1);
+	print(xthen1);
     }
 
     private static void print(ArrayList a) {
