@@ -10,8 +10,8 @@ public class Number extends Parser<ArrayList<Character>, MyString> {
 	Satisfy<Character, MyString> p =
 	    new Satisfy<Character, MyString>(new Digit());
 					    
-	Some<Character, MyString> sp =
-	    new Some<Character, MyString>(p);
+	Some<Character, MyString, Character> sp =
+	    new Some<Character, MyString, Character>(p);
 
 	return sp.parse(inp.clone());
     }

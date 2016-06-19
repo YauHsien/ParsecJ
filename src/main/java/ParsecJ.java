@@ -4,6 +4,7 @@ import util.Pair;
 import util.EqualX;
 import util.Number;
 import util.Word;
+import util.PString;
 import primitive.Succeed;
 import primitive.Fail;
 import primitive.Satisfy;
@@ -32,16 +33,15 @@ abstract class ParsecJ<T1, T2> {
 	    new Satisfy<Character, MyString>(eqx);
 	*/
 	Literal li = new Literal('a');
-	Using<Character, Integer, MyString> ch_using_num =
+	Using<Character, Integer, MyString, Character> ch_using_num =
 	    new Using(li, new AlwaysOne());
-	Many<Character, MyString> mli =
-	    new Many<Character, MyString>(li);
-	Some<Character, MyString> sli =
-	    new Some<Character, MyString>(li);
-	Number np =
-	    new Number();
-	Word wp =
-	    new Word();
+	Many<Character, MyString, Character> mli =
+	    new Many<Character, MyString, Character>(li);
+	Some<Character, MyString, Character> sli =
+	    new Some<Character, MyString, Character>(li);
+	Number np = new Number();
+	Word wp = new Word();
+	PString stringp = new PString(new MyString("hello"));
 
 	MyString inp = new MyString("hello,world");
 	MyString inp1 = new MyString("aaab");
@@ -60,7 +60,9 @@ abstract class ParsecJ<T1, T2> {
 	ArrayList<Pair<ArrayList<Character>, MyString>> np1 =
 	    np.parse(inp2.clone());
 	ArrayList<Pair<ArrayList<Character>, MyString>> wp1 =
-	    wp.parse(inp.clone());
+	    wp.parse(inp);
+	ArrayList<Pair<ArrayList<Character>, MyString>> stringp1 =
+	    stringp.parse(inp);
 
 	print(s1);
 	print(f1);
@@ -71,6 +73,7 @@ abstract class ParsecJ<T1, T2> {
 	print(sli1);
 	print(np1);
 	print(wp1);
+	print(stringp1);
     }
 
     private static void print(ArrayList a) {

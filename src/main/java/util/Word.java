@@ -10,8 +10,8 @@ public class Word extends Parser<ArrayList<Character>, MyString> {
 	Satisfy<Character, MyString> s =
 	    new Satisfy<Character, MyString>(new Letter());
 
-	Some<Character, MyString> sp =
-	    new Some<Character, MyString>(s);
+	Some<Character, MyString, Character> sp =
+	    new Some<Character, MyString, Character>(s);
 
 	return sp.parse(inp);
     }
