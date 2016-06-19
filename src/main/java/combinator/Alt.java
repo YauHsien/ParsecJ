@@ -2,6 +2,7 @@ package combinator;
 import util.Parser;
 import util.Pair;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Alt<T1, T2> extends Parser<T1, T2> {
     private Parser<T1, T2> fst;

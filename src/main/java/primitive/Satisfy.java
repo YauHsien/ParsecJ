@@ -16,14 +16,15 @@ public class Satisfy<T1, T2 extends LinkedList<T1>> extends
 
     @Override
     public ArrayList<Pair<T1, T2>> parse(T2 inp) {
-	T1 head = inp.pollFirst();
+	T2 inp1 = (T2)inp.clone();
+	T1 head = inp1.pollFirst();
 
 	if (head.equals(null))
-	    return (new Fail<T1, T2>()).parse(inp);
+	    return (new Fail<T1, T2>()).parse(inp1);
 	
 	if (p.eval(head))
-	    return (new Succeed<T1, T2>(head)).parse(inp);
+	    return (new Succeed<T1, T2>(head)).parse(inp1);
 	
-	return (new Fail<T1, T2>()).parse(inp);
+	return (new Fail<T1, T2>()).parse(inp1);
     }
 }
