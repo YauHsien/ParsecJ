@@ -15,6 +15,7 @@ import combinator.Using;
 import combinator.Many;
 import combinator.Some;
 import combinator.XThen;
+import combinator.ThenX;
 import example.AlwaysOne;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,9 @@ abstract class ParsecJ<T1, T2> {
 	XThen<ArrayList<Character>, ArrayList<Character>, MyString, Character>
 	    xthen = new XThen<ArrayList<Character>, ArrayList<Character>,
 	    MyString, Character>(np, wp);
+	ThenX<ArrayList<Character>, ArrayList<Character>, MyString, Character>
+	    thenx = new ThenX<ArrayList<Character>, ArrayList<Character>,
+	    MyString, Character>(np, wp);
 
 	MyString inp = new MyString("hello,world");
 	MyString inp1 = new MyString("aaab");
@@ -69,6 +73,8 @@ abstract class ParsecJ<T1, T2> {
 	    stringp.parse(inp);
 	ArrayList<Pair<ArrayList<Character>, MyString>> xthen1 =
 	    xthen.parse(inp2);
+	ArrayList<Pair<ArrayList<Character>, MyString>> thenx1 =
+	    thenx.parse(inp2);
 
 	print(s1);
 	print(f1);
@@ -81,6 +87,7 @@ abstract class ParsecJ<T1, T2> {
 	print(wp1);
 	print(stringp1);
 	print(xthen1);
+	print(thenx1);
     }
 
     private static void print(ArrayList a) {
