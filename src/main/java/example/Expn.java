@@ -13,13 +13,15 @@ public class Expn<Integer, MyString, Character>
     extends Parser<Integer, MyString, Character> {
 
     @Override
-    protected ArrayList<Pair<ArrayList<T1>, T2>> parse1(T2 inp) {
+    protected ArrayList<Pair<Integer, MyString>> parse1(T2 inp) {
 
         Literal plusp = new Literal('+');
 	Literal minusp = new Literal('-');
 
 	PairPlus pairPlus = new PairPlus();
 	PairMinus pairMinus = new PairMinus();
+
+	Term<Integer, MyString> term = new Term<Integer, MyString>();
 
 	XThen<Character, ArrayList<Character>, MyString, Character> pTTerm =
 	    new XThen<Character, ArrayList<Character>, MyString, Character>
