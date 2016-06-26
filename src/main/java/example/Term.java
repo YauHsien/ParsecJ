@@ -6,14 +6,15 @@ import combinator.Alt;
 import combinator.XThen;
 import combinator.Then;
 import combinator.Using;
+import function.PairMultiply;
+import function.PairDivide;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class Term<Integer, MyString, Character>
     extends Parser<Integer, MyString, Character> {
 
     @Override
-    protected ArrayList<Pair<Integer, MyString>> parse1(T2 inp) {
+    protected ArrayList<Pair<Integer, MyString>> parse1(MyString inp) {
 
         Literal multiplyp = new Literal('*');
 	Literal dividep = new Literal('/');
@@ -39,8 +40,8 @@ public class Term<Integer, MyString, Character>
 	
 	Using<Pair<ArrayList<Character>, ArrayList<Character>>, Integer, MyString, Character> using2 = new Using<Pair<ArrayList<Character>, ArrayList<Character>>, Integer, MyString, Character>(then2, pairDivide);
 
-	Alt<T1, T2, T3> alt2 = new Alt<T1, T2, T3>(using2, factor);
-	Alt<T1, T2, T3> alt1 = new Alt<T1, T2, T3>(using1, alt2);
+	Alt<Integer, MyString, Character> alt2 = new Alt<Integer, MyString, Character>(using2, factor);
+	Alt<Integer, MyString, Character> alt1 = new Alt<Integer, MyString, Character>(using1, alt2);
 	return using1.parse(inp);
     }
 }
