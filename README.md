@@ -4,6 +4,19 @@ Parser combinators (higher-order functions for parsing) in Java.
 
 A good exercise on Java Generic Types.
 
+### Example
+
+An example of arithmetic parsing:
+
+`example.Espn exp = new example.Espn();`
+`ArrayList<util.Pair<util.Numeral, util.MyString>> result = exp.parse(new util.MyString("2+(4-1)*3"));`
+`System.out.println(result);`
+
+It prints:
+
+`[(11, ""), (5, "*3"), (2, "+(4-1)*3")]`
+
+
 ### Reference
 
 Graham Hutton, "Higher-Order Functions for Parsing," 1992.
