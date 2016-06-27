@@ -1,13 +1,24 @@
 package util;
 
-public class Numeral {
+public class Numeral implements Cloneable {
 
-    private int n_val = null;
-    private double f_val = null;
+    @Override
+    public Numeral clone() {
+	Object o = null;
+	try {
+	    o = super.clone();
+	} catch(Exception e) {
+	    e.printStackTrace();
+	}
+	return (Numeral)o;
+    }
+
+    private Integer n_val = null;
+    private Double f_val = null;
 
     @Override
     public String toString() {
-	if (isNumber()) {
+	if (isInteger()) {
 	    return "" + n_val;
 	} else {
 	    return "" + f_val;
@@ -32,14 +43,14 @@ public class Numeral {
 
     public void setInteger(int n) {
         n_val = n;
-	f_val = n;
+	f_val = new Double(n);
     }
 
     public int getInteger() {
 	return n_val;
     }
 
-    protected void addInteger(int n1) {
+    protected void addInteger(Integer n1) {
 	if (isInteger()) {
 	    n_val = n_val + n1;
 	    f_val = f_val + n1;
@@ -48,12 +59,21 @@ public class Numeral {
 	}
     }
 
-    protected void timesInteger(int n1) {
+    protected void timesInteger(Integer n1) {
 	if (isInteger()) {
 	    n_val = n_val * n1;
 	    f_val = f_val * n1;
 	} else {
 	    f_val = f_val * n1;
+	}
+    }
+
+    protected void timesDouble(Double f1) {
+	if (isInteger()) {
+	    n_val = null;
+	    f_val = f_val * f1;
+	} else {
+	    f_val = f_val * f1;
 	}
     }
 
@@ -66,7 +86,7 @@ public class Numeral {
 	return f_val;
     }
 
-    protected void addDouble(double f1) {
+    protected void addDouble(Double f1) {
 	if (isInteger()) {
 	    n_val = null;
 	    f_val = f_val + f1;
@@ -75,7 +95,16 @@ public class Numeral {
 	}
     }
 
-    protected void divideDouble(double f1) {
+    protected void divideInteger(Integer n1) {
+	if (isInteger()) {
+	    n_val = null;
+	    f_val = f_val / n1;
+	} else {
+	    f_val = f_val / n1;
+	}
+    }
+    
+    protected void divideDouble(Double f1) {
 	if (isInteger()) {
 	    n_val = null;
 	    f_val = f_val / f1;
@@ -85,38 +114,42 @@ public class Numeral {
     }
 
     public Numeral add(Numeral numeral) {
+	Numeral me = this.clone();
 	if (numeral.isInteger()) {
-	    addInteger(numeral.getInteger());
+	    me.addInteger(numeral.getInteger());
 	} else {
-	    addDouble(numeral.getDouble());
+	    me.addDouble(numeral.getDouble());
 	}
-	return this;
+	return me;
     }
 
     public Numeral subtract(Numeral numeral) {
+	Numeral me = this.clone();
 	if (numeral.isInteger()) {
-	    addInteger(-(numeral.getInteger()));
+	    me.addInteger(-(numeral.getInteger()));
 	} else {
-	    addDouble(-(numeral.getDouble()));
+	    me.addDouble(-(numeral.getDouble()));
 	}
-	return this;
+	return me;
     }
 
     public Numeral times(Numeral numeral) {
+	Numeral me = this.clone();
 	if (numeral.isInteger()) {
-	    timesInteger(numeral.getInteger());
+	    me.timesInteger(numeral.getInteger());
 	} else {
-	    timesDouble(numeral.getDouble());
+	    me.timesDouble(numeral.getDouble());
 	}
-	return this;
+	return me;
     }
 
     public Numeral divide(Numeral numeral) {
+	Numeral me = this.clone();
 	if (numeral.isInteger()) {
-	    divideInteger(numeral.getInteger());
+	    me.divideInteger(numeral.getInteger());
 	} else {
-	    divideDouble(numeral.getDouble());
+	    me.divideDouble(numeral.getDouble());
 	}
-	return this;
+	return me;
     }
 }

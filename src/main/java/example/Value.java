@@ -1,20 +1,21 @@
 package example;
 import util.Function;
+import util.Numeral;
 import java.util.ArrayList;
 
 public class Value
-    extends Function<ArrayList<Character>, Integer> {
+    extends Function<ArrayList<Character>, Numeral> {
 
     @Override
-    public Integer apply(ArrayList<Character> list) {
+    public Numeral apply(ArrayList<Character> list) {
 
 	int value = 0;
 
 	for (Object o: list) {
-	    Character c = (Object)o;
+	    Character c = (Character)o;
 	    value = value * 10 + to_number(c);
 	}
-	return new Number(value);
+	return new Numeral(value);
     }
 
     private int to_number(Character c) {
@@ -38,6 +39,6 @@ public class Value
 	    return 8;
 	else if (c.equals('9'))
 	    return 9;
-	return null;
+	throw new IllegalArgumentException("badarg: \'" + c + "\'");
     }
 }

@@ -4,12 +4,14 @@ import primitive.Satisfy;
 import combinator.Some;
 import java.util.ArrayList;
 
-public class Number
+public class NumberParser
     extends Parser<ArrayList<Character>, MyString, Character> {
     
     @Override
     protected ArrayList<Pair<ArrayList<Character>, MyString>> parse1
 	(MyString inp) {
+
+	MyString inp1 = inp.clone();
 	
 	Satisfy<Character, MyString> p =
 	    new Satisfy<Character, MyString>(new Digit());
@@ -17,7 +19,7 @@ public class Number
 	Some<Character, MyString, Character> sp =
 	    new Some<Character, MyString, Character>(p);
 
-	return sp.parse(inp);
+	return sp.parse(inp1);
     }
 }
 

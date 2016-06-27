@@ -2,9 +2,10 @@
 import util.MyString;
 import util.Pair;
 import util.EqualX;
-import util.Number;
+import util.NumberParser;
 import util.Word;
 import util.PString;
+import util.Numeral;
 import primitive.Succeed;
 import primitive.Fail;
 import primitive.Satisfy;
@@ -18,6 +19,7 @@ import combinator.XThen;
 import combinator.ThenX;
 import combinator.Return;
 import example.AlwaysOne;
+import example.Expn;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +44,7 @@ abstract class ParsecJ<T1, T2> {
 	    new Many<Character, MyString, Character>(li);
 	Some<Character, MyString, Character> sli =
 	    new Some<Character, MyString, Character>(li);
-	Number np = new Number();
+	NumberParser np = new NumberParser();
 	Word wp = new Word();
 	PString stringp = new PString(new MyString("hello"));
 	XThen<ArrayList<Character>, ArrayList<Character>, MyString, Character>
@@ -56,10 +58,12 @@ abstract class ParsecJ<T1, T2> {
 	Return<ArrayList<Character>, Integer, MyString, Character> ret2 =
 	    new Return<ArrayList<Character>, Integer, MyString, Character>
 	    (sli, 1);
+	Expn expn = new Expn();
 
 	MyString inp = new MyString("hello,world");
 	MyString inp1 = new MyString("aaab");
 	MyString inp2 = new MyString("123abc");
+	MyString inp3 = new MyString("2+(4-1)*3");
 	
 	ArrayList<Pair<Integer, MyString>> s1 = s.parse(inp.clone());
 	ArrayList<Pair<Integer, MyString>> f1 = f.parse(inp.clone());
@@ -72,7 +76,7 @@ abstract class ParsecJ<T1, T2> {
 	ArrayList<Pair<ArrayList<Character>, MyString>> sli1 =
 	    sli.parse(inp1.clone());
 	ArrayList<Pair<ArrayList<Character>, MyString>> np1 =
-	    np.parse(inp2.clone());
+	    np.parse(inp3);
 	ArrayList<Pair<ArrayList<Character>, MyString>> wp1 =
 	    wp.parse(inp);
 	ArrayList<Pair<ArrayList<Character>, MyString>> stringp1 =
@@ -85,6 +89,8 @@ abstract class ParsecJ<T1, T2> {
 	    ret1.parse(inp1);
 	ArrayList<Pair<Integer, MyString>> ret2r =
 	    ret2.parse(inp1);
+	ArrayList<Pair<Numeral, MyString>> expn1 =
+	    expn.parse(inp3);
 
 	print(s1);
 	print(f1);
@@ -100,6 +106,7 @@ abstract class ParsecJ<T1, T2> {
 	print(thenx1);
 	print(ret1r);
 	print(ret2r);
+	print(expn1);
     }
 
     private static void print(ArrayList a) {

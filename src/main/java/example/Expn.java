@@ -1,6 +1,8 @@
 package example;
 import util.Pair;
 import util.MyString;
+import util.Numeral;
+import util.Parser;
 import primitive.Literal;
 import combinator.Alt;
 import combinator.XThen;
@@ -10,39 +12,43 @@ import function.PairPlus;
 import function.PairMinus;
 import java.util.ArrayList;
 
-public class Expn<Integer, MyString, Character>
-    extends Parser<Integer, MyString, Character> {
+public class Expn
+    extends Parser<Numeral, MyString, Character> {
 
     @Override
-    protected ArrayList<Pair<Integer, MyString>> parse1(MyString inp) {
+    protected ArrayList<Pair<Numeral, MyString>> parse1(MyString inp) {
 
         Literal plusp = new Literal('+');
 	Literal minusp = new Literal('-');
-
 	PairPlus pairPlus = new PairPlus();
 	PairMinus pairMinus = new PairMinus();
+	Term term = new Term();
 
-	Term<Integer, MyString> term = new Term<Integer, MyString>();
-
-	XThen<Character, ArrayList<Character>, MyString, Character> pTTerm =
-	    new XThen<Character, ArrayList<Character>, MyString, Character>
-	    (plusp, term);
+	XThen<Character, Numeral, MyString, Character> pTTerm =
+	    new XThen<Character, Numeral, MyString, Character>(plusp, term);
 	
-	Then<ArrayList<Character>, ArrayList<Character>, MyString, Character> then1 =  new Then<ArrayList<Character>, ArrayList<Character>, MyString, Character>(term, pTTerm);
+	Then<Numeral, Numeral, MyString, Character> then1 =
+	    new Then<Numeral, Numeral, MyString, Character>(term, pTTerm);
 
-	Using<Pair<ArrayList<Character>, ArrayList<Character>>, Integer, MyString, Character> using1 = new Using<Pair<ArrayList<Character>, ArrayList<Character>>, Integer, MyString, Character>(then1, pairPlus);
+	Using<Pair<Numeral, Numeral>, Numeral, MyString, Character> using1 =
+	    new Using<Pair<Numeral, Numeral>, Numeral, MyString, Character>
+	    (then1, pairPlus);
 	
-	XThen<Character, ArrayList<Character>, MyString, Character> mTTerm =
-	    new XThen<Character, ArrayList<Character>, MyString, Character>
-	    (minusp, term);
+	XThen<Character, Numeral, MyString, Character> mTTerm =
+	    new XThen<Character, Numeral, MyString, Character>(minusp, term);
 
-	Then<ArrayList<Character>, ArrayList<Character>, MyString, Character> then2 = new Then<ArrayList<Character>, ArrayList<Character>, MyString, Character>(term, mTTerm);
+	Then<Numeral, Numeral, MyString, Character> then2 =
+	    new Then<Numeral, Numeral, MyString, Character>(term, mTTerm);
 	
-	Using<Pair<ArrayList<Character>, ArrayList<Character>>, Integer, MyString, Character> using2 = new Using<Pair<ArrayList<Character>, ArrayList<Character>>, Integer, MyString, Character>(then2, pairMinus);
+	Using<Pair<Numeral, Numeral>, Numeral, MyString, Character> using2 =
+	    new Using<Pair<Numeral, Numeral>, Numeral, MyString, Character>
+	    (then2, pairMinus);
 
-	Alt<Integer, MyString, Character> alt2 = new Alt<Integer, MyString, Character>(using2, term);
-	Alt<Integer, MyString, Character> alt1 = new Alt<Integer, MyString, Character>(using1, alt2);
-	return using1.parse(inp);
+	Alt<Numeral, MyString, Character> alt2 =
+	    new Alt<Numeral, MyString, Character>(using2, term);
+	Alt<Numeral, MyString, Character> alt1 =
+	    new Alt<Numeral, MyString, Character>(using1, alt2);
+	return alt1.parse(inp);
     }
 }
 

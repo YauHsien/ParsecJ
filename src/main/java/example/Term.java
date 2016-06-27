@@ -1,6 +1,8 @@
 package example;
 import util.Pair;
 import util.MyString;
+import util.Numeral;
+import util.Parser;
 import primitive.Literal;
 import combinator.Alt;
 import combinator.XThen;
@@ -10,39 +12,44 @@ import function.PairMultiply;
 import function.PairDivide;
 import java.util.ArrayList;
 
-public class Term<Integer, MyString, Character>
-    extends Parser<Integer, MyString, Character> {
+public class Term
+    extends Parser<Numeral, MyString, Character> {
 
     @Override
-    protected ArrayList<Pair<Integer, MyString>> parse1(MyString inp) {
+    protected ArrayList<Pair<Numeral, MyString>> parse1(MyString inp) {
 
         Literal multiplyp = new Literal('*');
 	Literal dividep = new Literal('/');
-
 	PairMultiply pairMultiply = new PairMultiply();
 	PairDivide pairDivide = new PairDivide();
+	Factor factor = new Factor();
 
-	Factor<Integer, MyString> factor = new Factor<Integer, MyString>();
-
-	XThen<Character, ArrayList<Character>, MyString, Character> mTFactor =
-	    new XThen<Character, ArrayList<Character>, MyString, Character>
+	XThen<Character, Numeral, MyString, Character> mTFactor =
+	    new XThen<Character, Numeral, MyString, Character>
 	    (multiplyp, factor);
 	
-	Then<ArrayList<Character>, ArrayList<Character>, MyString, Character> then1 =  new Then<ArrayList<Character>, ArrayList<Character>, MyString, Character>(factor, mTFactor);
+	Then<Numeral, Numeral, MyString, Character> then1 =
+	    new Then<Numeral, Numeral, MyString, Character>(factor, mTFactor);
 
-	Using<Pair<ArrayList<Character>, ArrayList<Character>>, Integer, MyString, Character> using1 = new Using<Pair<ArrayList<Character>, ArrayList<Character>>, Integer, MyString, Character>(then1, pairMultiply);
+	Using<Pair<Numeral, Numeral>, Numeral, MyString, Character> using1 =
+	    new Using<Pair<Numeral, Numeral>, Numeral, MyString, Character>
+	    (then1, pairMultiply);
 	
-	XThen<Character, ArrayList<Character>, MyString, Character> dTFactor =
-	    new XThen<Character, ArrayList<Character>, MyString, Character>
-	    (dividep, factor);
+	XThen<Character, Numeral, MyString, Character> dTFactor =
+	    new XThen<Character, Numeral, MyString, Character>(dividep, factor);
 
-	Then<ArrayList<Character>, ArrayList<Character>, MyString, Character> then2 = new Then<ArrayList<Character>, ArrayList<Character>, MyString, Character>(factor, dTFactor);
+	Then<Numeral, Numeral, MyString, Character> then2 =
+	    new Then<Numeral, Numeral, MyString, Character>(factor, dTFactor);
 	
-	Using<Pair<ArrayList<Character>, ArrayList<Character>>, Integer, MyString, Character> using2 = new Using<Pair<ArrayList<Character>, ArrayList<Character>>, Integer, MyString, Character>(then2, pairDivide);
+	Using<Pair<Numeral, Numeral>, Numeral, MyString, Character> using2 =
+	    new Using<Pair<Numeral, Numeral>, Numeral, MyString, Character>
+	    (then2, pairDivide);
 
-	Alt<Integer, MyString, Character> alt2 = new Alt<Integer, MyString, Character>(using2, factor);
-	Alt<Integer, MyString, Character> alt1 = new Alt<Integer, MyString, Character>(using1, alt2);
-	return using1.parse(inp);
+	Alt<Numeral, MyString, Character> alt2 =
+	    new Alt<Numeral, MyString, Character>(using2, factor);
+	Alt<Numeral, MyString, Character> alt1 =
+	    new Alt<Numeral, MyString, Character>(using1, alt2);
+	return alt1.parse(inp);
     }
 }
 
